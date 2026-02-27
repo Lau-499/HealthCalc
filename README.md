@@ -53,13 +53,24 @@ Para que el proyecto cumpla con estándares de software médico, se deben inclui
       - Sobrepeso ($25-29.9$)
       - Obesidad ($\ge 30$)
 
+     * **CASOS DE USO**
+        1. **El peso se mide en kilogramos
+        2. **La estatura se mide en centímetros
+        3. **El peso debe ser mayor a 1 kilogramo
+        4. **El peso debe ser menor a 700 kilogramos
+        5. **La estatura debe ser mayor a 100 centímetros
+        6. **La estatura debe ser menor a 300 centímetros
+        7. **Los valores deben ser números naturales
+        
+
+
 ![Clasificación del estado nutricional de una persona.](resources/images/bmi.jpeg)
 
 ---
 
 * **M2: Peso Corporal Ideal (PCI) o _Ideal Body Weight (IBW)_:** El PCI estima el peso teórico que se asocia con el menor riesgo de mortalidad y una mejor salud para un persona.
 
-    4. **Fórmula de Lorentz (1929)**
+    **Fórmula de Lorentz (1929)**
     Es la fórmula más sencilla de aplicar manualmente ya que utiliza directamente la estatura en centímetros y no requiere conversiones a pulgadas.
 
         - **Hombres:** $PCI = (Estatura en cm - 100) - \frac{Estatura - 150}{4}$
@@ -67,6 +78,10 @@ Para que el proyecto cumpla con estándares de software médico, se deben inclui
 
     **Nota:** Para convertir la estatura de **cm a pulgadas**, hay que dividir los centímetros entre **2.54**.
 
+    * **CASOS DE USO**
+        1. **La estatura debe introducirse en centímetros
+        2. **La estatura debe ser un número mayor de 100
+        3. **La estatura debe ser un número menor de 300
 ---
 
 * **M5: Índice de Cintura-Cadera (ICC) o _Waist-to-Hip Ratio_ (WHR):** Es ICC la relación entre el perímetro de la cintura y el de la cadera. Se utiliza para identificar la distribución de la grasa (cuerpo tipo "manzana" o "pera") y estimar el riesgo de enfermedades cardiovasculares.
@@ -96,9 +111,6 @@ Para que el proyecto cumpla con estándares de software médico, se deben inclui
     | **Mujer** | $> 0.85$ | **Manzana (Androide)** | **Alto** |
 
 </details>
-
-<details>
-<summary><b>Métricas Metabólicas y Nutricionales</b></summary>
 
 ## Plan de pruebas
 
