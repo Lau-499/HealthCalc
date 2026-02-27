@@ -52,16 +52,7 @@ Para que el proyecto cumpla con estándares de software médico, se deben inclui
       - Normal ($18.5-24.9$)
       - Sobrepeso ($25-29.9$)
       - Obesidad ($\ge 30$)
-
-     * **CASOS DE USO**
-        1. **El peso se mide en kilogramos
-        2. **La estatura se mide en centímetros
-        3. **El peso debe ser mayor a 1 kilogramo
-        4. **El peso debe ser menor a 700 kilogramos
-        5. **La estatura debe ser mayor a 100 centímetros
-        6. **La estatura debe ser menor a 300 centímetros
-        7. **Los valores deben ser números naturales
-        
+      
 
 
 ![Clasificación del estado nutricional de una persona.](resources/images/bmi.jpeg)
@@ -78,10 +69,6 @@ Para que el proyecto cumpla con estándares de software médico, se deben inclui
 
     **Nota:** Para convertir la estatura de **cm a pulgadas**, hay que dividir los centímetros entre **2.54**.
 
-    * **CASOS DE USO**
-        1. **La estatura debe introducirse en centímetros
-        2. **La estatura debe ser un número mayor de 100
-        3. **La estatura debe ser un número menor de 300
 ---
 
 * **M5: Índice de Cintura-Cadera (ICC) o _Waist-to-Hip Ratio_ (WHR):** Es ICC la relación entre el perímetro de la cintura y el de la cadera. Se utiliza para identificar la distribución de la grasa (cuerpo tipo "manzana" o "pera") y estimar el riesgo de enfermedades cardiovasculares.
@@ -110,6 +97,11 @@ Para que el proyecto cumpla con estándares de software médico, se deben inclui
     | **Mujer** | $\le 0.85$ | Pera (Ginoide) | Bajo / Moderado |
     | **Mujer** | $> 0.85$ | **Manzana (Androide)** | **Alto** |
 
+    * **CASOS DE USO**
+        1. **El perímetro debe ser en centímetros
+        2. **El perímetro debe ser mayor a 45
+        3. **El perímetro debe ser menor a 300
+        
 </details>
 
 ## Plan de pruebas
@@ -125,6 +117,14 @@ Para garantizar que la calculadora sea fiable y segura, se han definido los sigu
     * El sistema debe rechazar alturas menores a 30 cm o mayores a 300 cm.
 * **Protección ante errores de escritura:** Se verifica que no se permitan valores negativos o iguales a cero.
 
+* **CASOS DE USO**
+        1. **El peso se mide en kilogramos
+        2. **La estatura se mide en centímetros
+        3. **El peso debe ser mayor a 1 kilogramo
+        4. **El peso debe ser menor a 700 kilogramos
+        5. **La estatura debe ser mayor a 100 centímetros
+        6. **La estatura debe ser menor a 300 centímetros
+        7. **Los valores deben ser números naturales
 </details>
 
 <details>
@@ -137,8 +137,20 @@ Para cada categoría, probamos valores que están justo en el límite para asegu
 * **Obesidad (Obesity):** Se comprueba con valores desde 30 en adelante.
 * **Seguridad:** Se rechazan clasificaciones para resultados de IMC negativos o absurdamente altos (más de 150).
 
+* **CASOS DE USO**
+        1. **La estatura debe introducirse en centímetros
+        2. **La estatura debe ser un número mayor de 100
+        3. **La estatura debe ser un número menor de 300
 </details>
 
+<details>
+<summary><b>Pruebas de Clasificación del Peso Corporal Ideal (PCI) o Ideal Body Weight (IBW)</b></summary>
+
+* **CASOS DE USO**
+        1. **La estatura debe introducirse en centímetros
+        2. **La estatura debe ser un número mayor de 100
+        3. **La estatura debe ser un número menor de 300
+</details>
 
 ## Instalación y ejecución
 
