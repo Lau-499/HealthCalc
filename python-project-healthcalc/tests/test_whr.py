@@ -44,7 +44,7 @@ class TestBMI:
             self.health_calc.bmi(weight, height)
 
         weight = -70
-        height = -1.70
+        height = 1.70
         with pytest.raises(InvalidHealthDataException):
             self.health_calc.bmi(weight, height)
 
