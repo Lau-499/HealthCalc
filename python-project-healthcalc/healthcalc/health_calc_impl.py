@@ -1,5 +1,5 @@
-from healthcalc import HealthCalc, InvalidHealthDataException
-
+from .health_calc import HealthCalc
+from .exceptions import InvalidHealthDataException
 
 class HealthCalcImpl(HealthCalc):
 

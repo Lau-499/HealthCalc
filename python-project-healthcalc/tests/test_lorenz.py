@@ -15,7 +15,7 @@ class TestBMI:
         """Cálculo de IBW con valores estándar válidos para hombres"""
         
         height = 1.75
-        expected_lorentz = (height-1.00) - ((height -1.50)/4)
+        expected_lorentz = (height*100-100) - ((height*100 -150)/4)
 
         result = self.health_calc.lorentz("M", height)
 
@@ -26,7 +26,7 @@ class TestBMI:
         """Cálculo de IBW con valores estándar válidos para mujeres"""
         
         height = 1.75
-        expected_lorentz = (height-1.00) - ((height -1.50)/2)
+        expected_lorentz = (height*100-100) - ((height*100 -150)/2)
 
         result = self.health_calc.lorentz("F", height)
 
