@@ -3,123 +3,110 @@ from healthcalc.health_calc_impl import HealthCalcImpl
 from healthcalc.exceptions import InvalidHealthDataException
 
 
-class TestBMI:
+class TestWHR:
 
     @pytest.fixture(autouse=True)  # Equivalente a @BeforeEach en JUnit
-    def set_up(self):
+    def set_up(self): #¿Qué es self en python? Es como el this de java, es una referencia al objeto actual, se usa para acceder a los atributos y métodos de la clase desde dentro de la clase. En este caso, se usa para crear una instancia de HealthCalcImpl y asignarla a self.health_calc, lo que permite que cada test pueda usar esa instancia para llamar a los métodos de cálculo de salud.
         """Se ejecuta antes de cada test."""
         self.health_calc = HealthCalcImpl()
 
-    # --- Tests de Cálculo de la métrica BMI ---
-    def test_bmi_valido(self):
-        """Cálculo de BMI con valores estándar válidos"""
-        weight = 70.0
-        height = 1.75
-        expected_bmi = 70.0 / (1.75 ** 2)
+    # --- Tests de Cálculo de la métrica WHR ---
+    def test_whr_validos(self):
+        """Cálculo de WHR con valores estándar válidos"""
+        hip = 0.90
+        waist = 0.70
+        expected_whr = waist / hip
+        assert self.health_calc.whr(waist, hip) == pytest.approx(expected_whr, abs=1e-5)
 
-        result = self.health_calc.bmi(weight, height)
+    def test_whr_extremos_validos(self):
+        assert self.health_calc.whr(0.45, 0.45) == pytest.approx(1.0)
+        assert self.health_calc.whr(3.0, 0.45) == pytest.approx(3.0 / 0.45)
+        assert self.health_calc.whr(0.45, 3.0) == pytest.approx(0.45 / 3.0)
 
-        # pytest.approx es el equivalente a assertEquals con delta (0.01) en JUnit
-        assert result == pytest.approx(expected_bmi, abs=0.01)
 
-    def test_bmi_peso_cero(self):
-        """Lanzar excepción cuando el peso es cero"""
-        weight = 0
-        height = 1.70
+    def test_whr_cintura_0(self):
+        """Lanzar excepción cuando el perímetro de la cintura es 0"""
+        waist = 0
+        hip = 0.90
 
         with pytest.raises(InvalidHealthDataException):
-            self.health_calc.bmi(weight, height)
+            self.health_calc.whr(waist, hip)
 
-    def test_bmi_altura_cero(self):
-        """Lanzar excepción cuando la altura es cero"""
+
+    def test_whr_cadera_0(self):
+        """Lanzar excepción cuando el perímetro de la cadera es 0"""
+        waist = 0.70
+        hip = 0
+
         with pytest.raises(InvalidHealthDataException):
-            self.health_calc.bmi(70, 0)
+            self.health_calc.whr(waist, hip)
 
-    def test_bmi_negativos(self):
+    def test_whr_negativos(self):
         """Lanzar excepción cuando los valores son negativos (Equivalente a assertAll)"""
-        weight = -70
-        height = 1.70
+        waist = -0.70
+        hip = 0.90
 
         with pytest.raises(InvalidHealthDataException):
-            self.health_calc.bmi(weight, height)
+            self.health_calc.whr(waist, hip)
 
-        weight = -70
-        height = 1.70
+        waist = 0.70
+        hip = -0.90
         with pytest.raises(InvalidHealthDataException):
-            self.health_calc.bmi(weight, height)
+            self.health_calc.whr(waist, hip)
 
-        weight = 70
-        height = -1.70
+    # --- Tests de Límites e Invalidación para el WHR ---
+      @pytest.mark.parametrize("waist", [0.44, 3.01])
+    def test_whr_cintura_fuera_rango(self, waist):
         with pytest.raises(InvalidHealthDataException):
-            self.health_calc.bmi(weight, height)
+            self.health_calc.whr(waist, 100.0)
 
-    # --- Tests de Límites e Invalidación para el BMI ---
-
-    @pytest.mark.parametrize("weight", [-10.0, 0.0, 0.99], ids=lambda x: f"Peso mínimo inválido: {x}kg")
-    def test_peso_minimo_imposible(self, weight: float):
-        """Lanzar excepción cuando el peso es negativo o menor que 1kg."""
-        height = 1.70
-
+    @pytest.mark.parametrize("hip", [0.44, 3.01])
+    def test_whr_cadera_fuera_rango(self, hip):
         with pytest.raises(InvalidHealthDataException):
-            self.health_calc.bmi(weight, height)
-
-    @pytest.mark.parametrize("weight", [700.1, 1000.0, 5000.0], ids=lambda x: f"Peso máximo inválido: {x}kg")
-    def test_peso_maximo_imposible(self, weight: float):
-        """Lanzar excepción cuando el peso es extremadamente alto."""
-        height = 1.70
-
-        with pytest.raises(InvalidHealthDataException):
-            self.health_calc.bmi(weight, height)
-
-    @pytest.mark.parametrize("height", [-0.50, 0.0, 0.29], ids=lambda x: f"Altura mínima inválida: {x}m")
-    def test_altura_minima_imposible(self, height: float):
-        """Lanzar excepción cuando la altura es negativa o menor que 30cm."""
-        weight = 70
-
-        with pytest.raises(InvalidHealthDataException):
-            self.health_calc.bmi(weight, height)
-
-    @pytest.mark.parametrize("height", [3.01, 3.50, 5.00], ids=lambda x: f"Altura máxima inválida: {x}m")
-    def test_altura_maximo_imposible(self, height: float):
-        """Lanzar excepción cuando la altura es extremadamente alta."""
-        weight = 70
-        
-        with pytest.raises(InvalidHealthDataException):
-            self.health_calc.bmi(weight, height)
+            self.health_calc.whr(100.0, hip)
 
 
-    # --- Tests de Clasificación básica a partir del BMI ---
+
+    # --- Tests de Clasificación básica a partir del WHR ---
     
-    @pytest.mark.parametrize("bmi", [10.0, 18.4, 18.49], ids=lambda x: f"BMI {x} -> Underweight")
-    def test_bmi_underweight(self, bmi: float):
-        """Cálculo de clasificación BMI para Underweight."""
-        assert self.health_calc.bmi_classification(bmi) == "Underweight"
+    @pytest.mark.parametrize(
+        "sex,whr,expected",
+        [
+            ("M", 0.90, "Pear"),
+            ("M", 0.85, "Pear"),
+            ("M", 0.91, "Apple"),
+            ("M", 1.50, "Apple"),
+            ("F", 0.85, "Pear"),
+            ("F", 0.80, "Pear"),
+            ("F", 0.86, "Apple"),
+            ("F", 1.00, "Apple"),
+        ],
+        ids=lambda t: f"{t[0]} WHR={t[1]} -> {t[2]}",
+    )
+    def test_whr_classification_valida(self, sex: str, whr: float, expected: str):
+        assert self.health_calc.whr_classification(sex, whr) == expected
 
-    @pytest.mark.parametrize("bmi", [18.5, 22.0, 24.9, 24.99], ids=lambda x: f"BMI {x} -> Normal weight")
-    def test_bmi_normal_weight(self, bmi: float):
-        """Cálculo de clasificación BMI para Normal weight."""
-        assert self.health_calc.bmi_classification(bmi) == "Normal weight"
 
-    @pytest.mark.parametrize("bmi", [25.0, 27.5, 29.9, 29.99], ids=lambda x: f"BMI {x} -> Overweight")
-    def test_bmi_overweight(self, bmi: float):
-        """Cálculo de clasificación BMI para Overweight."""
-        assert self.health_calc.bmi_classification(bmi) == "Overweight"
 
-    @pytest.mark.parametrize("bmi", [30.0, 35.0, 50.0], ids=lambda x: f"BMI {x} -> Obesity")
-    def test_bmi_obesity(self, bmi: float):
-        """Cálculo de clasificación BMI para Obesity."""
-        assert self.health_calc.bmi_classification(bmi) == "Obesity"
 
-    # --- Tests de Límites e Invalidación para la clasificación BMI ---
+    # --- Tests de Límites e Invalidación para la clasificación WHR ---
 
-    @pytest.mark.parametrize("bmi", [-50.0, -1.0, -0.01], ids=lambda x: f"BMI negativo: {x}")
-    def test_bmi_classification_minimo_imposible(self, bmi: float):
-        """Lanzar excepción cuando el BMI es negativo."""
+    @pytest.mark.parametrize("sex, whr", [("M", -0.85), ("F", -0.70), ("M", -0.90)], ids=lambda x: f"WHR negativo: {x}")
+    def test_whr_classification_minimo_imposible(self, whr: float):
+        """Lanzar excepción cuando el WHR es negativo."""
         with pytest.raises(InvalidHealthDataException):
-            self.health_calc.bmi_classification(bmi)
+            self.health_calc.whr_classification(whr)
 
-    @pytest.mark.parametrize("bmi", [150.1, 200.0, 500.0], ids=lambda x: f"BMI máximo extremo: {x}")
-    def test_bmi_classification_maximo_imposible(self, bmi: float):
-        """Lanzar excepción cuando el BMI es extremadamente alto."""
+    @pytest.mark.parametrize("sex, whr", [1.01, 1.50, 2.00], ids=lambda x: f"WHR máximo extremo: {x}")
+    def test_whr_classification_maximo_imposible(self, whr: float):
+        """Lanzar excepción cuando el WHR es extremadamente alto."""
         with pytest.raises(InvalidHealthDataException):
-            self.health_calc.bmi_classification(bmi)
+            self.health_calc.whr_classification(whr)
+
+    @pytest.mark.parametrize("sex", ["X", "", "Male"], ids=lambda x: f"Sexo inválido: '{x}'")
+    def test_whr_classification_sexo_invalido(self, sex: str):
+        """Lanzar excepción cuando el sexo es inválido."""
+        whr = 0.85
+
+        with pytest.raises(InvalidHealthDataException):
+            self.health_calc.whr_classification(sex, whr)
