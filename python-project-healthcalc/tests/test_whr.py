@@ -62,8 +62,9 @@ class TestWHR:
 
     @pytest.mark.parametrize("hip", [0.44, 3.01])
     def test_whr_cadera_fuera_rango(self, hip):
+        # use a valid waist to ensure the hip-range check is reached
         with pytest.raises(InvalidHealthDataException):
-            self.health_calc.whr(100.0, hip)
+            self.health_calc.whr(1.0, hip)
 
 
 
