@@ -87,6 +87,17 @@ class TestBMI:
         with pytest.raises(InvalidHealthDataException):
             self.health_calc.bmi(weight, height)
 
+    # casos específicos para cubrir cada lado del OR en los límites biológicos
+    def test_bmi_peso_menor_que_uno(self):
+        """Peso mayor que 0 pero menor que 1 debe fallar en el rango biológico."""
+        with pytest.raises(InvalidHealthDataException):
+            self.health_calc.bmi(0.5, 1.70)
+
+    def test_bmi_altura_menor_que_minima(self):
+        """Altura mayor que 0 pero menor que 0.30 debe fallar en el rango biológico."""
+        with pytest.raises(InvalidHealthDataException):
+            self.health_calc.bmi(70, 0.20)
+
 
     # --- Tests de Clasificación básica a partir del BMI ---
     

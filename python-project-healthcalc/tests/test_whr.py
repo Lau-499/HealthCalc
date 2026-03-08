@@ -62,8 +62,9 @@ class TestWHR:
 
     @pytest.mark.parametrize("hip", [0.44, 3.01])
     def test_whr_cadera_fuera_rango(self, hip):
+        # use a valid waist to ensure the hip-range check is reached
         with pytest.raises(InvalidHealthDataException):
-            self.health_calc.whr(100.0, hip)
+            self.health_calc.whr(1.0, hip)
 
 
 
@@ -96,9 +97,7 @@ class TestWHR:
         with pytest.raises(InvalidHealthDataException):
             self.health_calc.whr_classification(sex, whr)
 
-    @pytest.mark.parametrize("sex",
-                              ["X", " ", "Male"], 
-                              ids=lambda x: f"Sexo inválido: '{x}'")
+    @pytest.mark.parametrize("sex",["X", " ", "Male"], ids=lambda x: f"Sexo inválido: '{x}'")
     
     def test_whr_classification_sexo_invalido(self, sex):
         """Lanzar excepción cuando el sexo es inválido."""
