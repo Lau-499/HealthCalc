@@ -351,6 +351,9 @@ Para cada categoría, probamos valores que están justo en el límite para asegu
 <details>
 <summary><b>Casos de Uso</b></summary>
 
-Insertar el diagrama aquí
+- Insertar el diagrama aquí
+- Insertar los enlaces de los ficheros .txt de cada caso de uso de las metricas de p1
+
+ [Caso de Uso: BMI](doc/Caso_uso_BMI.txt)
 
 </details>
