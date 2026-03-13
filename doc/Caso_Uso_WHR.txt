@@ -1,0 +1,83 @@
+Caso de uso WHR: Calcular Ratio cintura-cadera
+
+  -   Actor Principal: Usuario de la calculadora.
+  
+  -   Ámbito (Scope): Calculadora de Salud.
+  
+  -   Nivel (Level): Objetivo de usuario.
+  
+  -   Stakeholders e interesados:
+  
+      ·   Usuario: Obtener un cálculo preciso de IBW (Ideal Body Weight), así como el cálculo del WHR con la fórmula de WHR para obtener también su clasificación morfológica.
+  
+  -   Precondiciones:
+  
+      ·   El usuario debe introducir datos válidos de perímetro de cintura y de cadera.
+  
+      ·   El usuario debe introducir un sexo válido.
+  
+      ·   La calculadora debe funcionar correctamente a la hora de realizar cálculos.
+  
+  -   Garantías mínimas:
+  
+      ·   El usuario puede volver a introducir valores aunque el cálculo no se haya realizado.
+  
+      ·   El usuario podrá volver a elegir una métrica a calcular a pesar de haberla elegido previamente, o haber obtenido otra.
+  
+  -   Disparador: El usuario introduce "Y" como respuesta a la pregunta: "Do you want to know your Waist-To-Hip Ratio? Y/N".
+  
+  
+  -   Escenario Principal:
+  
+      1.  El sistema solicita al usuario ingresar el perímetro de la cintura en metros.
+  
+      2.  El usuario introduce el perímetro de su cintura.
+  
+      3.  El sistema solicita al usuario ingresar el perímetro de la cadera en metros.
+  
+      4.  El usuario introduce el perímetro de su cadera.
+  
+      5.  El sistema solicita al usuario ingresar su sexo ("M" para male o "F" para female).
+  
+      6.  El usuario ingresa "M" o "F".
+  
+      7.  El sistema calcula y muestra el índice de WHR por pantalla.
+  
+      8.  El sistema calcula y muestra la clasificación morfológica por pantalla.
+  
+      9.  El flujo continúa al siguiente cálculo o finaliza según la respuesta del usuario.
+  
+  -   Escenarios alternativos:
+  
+      2a. Cintura inválida:
+  
+        -   El usuario ingresa un valor no numérico de cintura.
+    
+        -   El sistema muestra "Value must be a number, try again.".
+    
+        -   Se repite la solicitud (paso 2).
+  
+      4a. Cadera inválida:
+  
+        -   El usuario ingresa un valor no numérico de cadera.
+    
+        -   El sistema muestra "Value must be a number, try again.".
+    
+        -   Se repite la solicitud (paso 4).
+  
+      6a. Sexo inválido:
+  
+        -   El usuario ingresa algo distinto de "M" o "F".
+    
+        -   El sistema muestra "Your sex must be either 'M' (male) or 'F' (female), try again.".
+    
+        -   Se repite la solicitud (paso 6).
+  
+      7a. Datos de salud inválidos:
+  
+        -   El sistema obtiene un cálculo de WHR inválido.
+    
+        -   El sistema muestra "Invalid Health data, try again".
+    
+        -   Se vuelve al paso 1.
+        
