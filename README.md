@@ -197,6 +197,7 @@ Para que el proyecto cumpla con estándares de software médico, se deben inclui
         - Si el paciente está muy enfermo y no ha habido, o es probable que no vaya a haber, aporte nutricional durante más de 5 días = 2 puntos
 
 Al sumar las puntuaciones, se puede clasificar el riesgo global de malnutrición:
+
     - **0** = Riesgo bajo, recomendada asistencia clínica habitual.
     - **1** = Riesgo intermedio, recomendada observación.
     - **2 o más** = Riesgo alto, recomendada intervención lo antes posible.
